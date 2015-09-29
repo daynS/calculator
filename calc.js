@@ -27,18 +27,47 @@ var solve = function(func, numArray){
 
         case "subtract": return subtract(numArray);
         break;
+
+        case "multiply": return multiply(numArray);
+        break;
+
+        case "divide": return divide(numArray);
+        break;
     }
+}
+
+var multiply = function(numArray){
+    var sum = 0;
+    if(counter === 0){
+        for(i=0; i < numArray.length; i++){
+          sum = parseFloat(numArray[i]) * sum;
+        }
+    }else{
+        sum = parseFloat(numArray[numArray.length - 1]) * parseFloat(numArray[numArray.length - 2])
+    }
+    return sum;
+}
+
+var divide = function(numArray){
+    if(counter === 0){
+        var sum = parseFloat(numArray[0]);
+        for(i=1; i < numArray.length; i++){
+            sum = sum / parseFloat(numArray[i]);
+        }
+    }else{
+        sum = parseFloat(numArray[numArray.length - 2]) / parseFloat(numArray[numArray.length - 1]);
+    }
+    return sum;
 }
 
 var subtract = function(numArray){
     if(counter === 0){
         var sum = parseFloat(numArray[0]);
-        console.log("FOR!");
         for(i=1; i < numArray.length; i++){
             sum = sum - parseFloat(numArray[i]);
         }
     }else{
-        sum = parseFloat(numArray[numArray.length - 1]) - parseFloat(numArray[numArray.length - 2]);
+        sum = parseFloat(numArray[numArray.length - 2]) - parseFloat(numArray[numArray.length - 1]);
     }
     return sum;
 }
@@ -142,7 +171,7 @@ clear.onclick = function() {
 	answer = 0;
 	display(0);
 	counter = 0;
-    var currentNum = "";
+    currentNum = "";
 }
 
 var addButton = document.getElementById('add');
@@ -159,6 +188,28 @@ addButton.onclick = function() {
 var subtractButton = document.getElementById('subtract');
 subtractButton.onclick = function() {
     func = "subtract";
+    numArray = addToArray(currentNum, numArray);
+    if(numArray.length >= 2 && counter === 0){
+        numArray = [numArray[numArray.length-2],numArray[numArray.length-1]]
+        equalsButton();
+    }
+    lastButton = "func";
+}
+
+var multiplyButton = document.getElementById('multiply');
+multiplyButton.onclick = function() {
+    func = "multiply";
+    numArray = addToArray(currentNum, numArray);
+    if(numArray.length >= 2 && counter === 0){
+        numArray = [numArray[numArray.length-2],numArray[numArray.length-1]]
+        equalsButton();
+    }
+    lastButton = "func";
+}
+
+var divideButton = document.getElementById('divide');
+divideButton.onclick = function() {
+    func = "divide";
     numArray = addToArray(currentNum, numArray);
     if(numArray.length >= 2 && counter === 0){
         numArray = [numArray[numArray.length-2],numArray[numArray.length-1]]
